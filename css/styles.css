@@ -1,0 +1,84 @@
+/* STYLESHEET CONTENT */
+
+#all {
+	background-color: #D8D8D8;
+	color: black;
+	font-family: sans-serif;
+	border: 1px solid gray;
+	width: 50%;
+	height: 35vw;
+	}
+
+header {
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+section {
+	display: flex;
+	font-size: small;
+	width: 100%;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	float: left;
+	width: 60%;
+	margin-right: 5%;
+}
+
+li {
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+}
+
+
+#txtName {
+	margin-left: 12%;
+}
+
+#sltCountry {
+	margin-left: 22%;
+	width: 10vw;
+}
+
+#txtDOB {
+	margin-left: 18%;
+	width: 25vw;
+}
+
+#right {
+	float: left;
+}
+
+#lblVisits {
+	width: 100%;
+	font-size: 8pt;
+}
+
+#txtAVisits {
+	margin-left: 0%;
+	margin-right: 20%;
+	color: black;
+	height: 10vw;
+	width: 15vw;
+	font-size: small;
+}
+
+
+.inputs{
+	border-radius: 5px;
+}
+
+#btnSayHi {
+	color: white;
+	background-color: #0174DF;
+	justify-content: left;
+}
+
+#lblSayHi {
+	width: 80%;
+}

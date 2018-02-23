@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ejercicio Intive</title>
+	<meta charset="utf-8" />
+	<meta content="Lucrecia Peralta" name="author" />
+	<link rel="stylesheet" href="css/styles.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="http://momentjs.com/downloads/moment.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+				//Populate the select with the countries from API.
+
+				var dropdown = $('#sltCountry');
+
+				dropdown.empty();
+
+				dropdown.append('<option selected="true" disabled>Elegir Pais</option>');
+				dropdown.prop('selectedIndex', 0);
+
+				const url = 'https://restcountries.eu/rest/v2/all';
+
+				// Populate dropdown with list of provinces
+				$.getJSON(url, function (data) {
+				  $.each(data, function (key, entry) {
+				    dropdown.append($('<option></option>').attr('value', entry.abbreviation).text(entry.name));
+				  })
+				});
+
+				//Retrieve data
+				if (typeof(Storage) !== "undefined") {
+					document.getElementById("txtName").innerHTML = localStorage.getItem("name");
+					document.getElementById("sltCountry").innerHTML = localStorage.getItem("country");
+					document.getElementById("txtDOB").innerHTML = localStorage.getItem("dob");
+				}
+
+				$('#txtName').on('change', function() {
+        	document.getElementById("btnSayHi").disabled = false;
+        	
+    		});
+
+		    $('#sltCountry').on('change', function() {
+		    	if (('#txtName').val()='') {
+		        document.getElementById("btnSayHi").disabled = true;
+		    	} else {
+		    		document.getElementById("btnSayHi").disabled = false;
+		    	}
+		    	
+		    });
+		    
+		    $('#txtDOB').on('change', function() {
+		    	if (('#txtName').val()='') {
+		        document.getElementById("btnSayHi").disabled = true;
+		    	} else {
+		        document.getElementById("btnSayHi").disabled = false;
+		      }
+		    });
+
+				$('#btnSayHi').on('click', function() {
+					document.getElementById("txtAVisits").innerHTML = document.getElementById("txtAVisits").innerHTML + '\n' +  
+					$('#txtName').val() + '&nbsp' + $('#sltCountry').val() +'&nbsp' + $('#txtDOB').val();
+
+					var dob = $('#txtDOB').val();
+					var current_date  =  moment();
+					var years = current_date.diff(dob, 'years');
+
+					var greeting = 'Hola '+ $('#txtName').val() + ' de ' + $('#sltCountry').val() +'. El ' + moment().date()+ ' del ' +
+					moment().month() + ' tendras ' + years + ' años';
+
+					$('#lblSayHi').text(greeting);
+
+					//Store data
+					if (typeof(Storage) !== "undefined") {
+						localStorage.setItem('name', $('#txtName').val());
+						localStorage.setItem('country', $('#sltCountry').val());
+						localStorage.setItem('dob', $('#txtDOB').val());
+					}
+
+					clearFields();
+				})
+
+				function clearFields() {
+					 document.getElementById("btnSayHi").disabled = true;
+					$('#txtName').val('');
+					$('#txtDOB').val('');
+					$('#sltCountry').val('');
+				}
+		});
+	</script>
+</head>
+<body>
+	<div id="all">
+		<header>
+			<h2>Ejercicio Intive</h2>
+			<h6>Nombre: Lucrecia Peralta</h6>
+		</header>
+	<section>
+		<article>
+			<form>
+				<div class="content">
+						<ul>
+							<li>
+								<label class="labels" id="lblName">Nombre</label>
+								<input type="text" class="inputs" name="txtName" id="txtName" required>
+							</li>
+							<li>
+								<label class="labels" id="lblCountry">Pais</label>
+								<select name="sltCountry" id="sltCountry" class="inputs" data-ng-model="vm.personalData.nationality" data-ng-options="country.countryName for country in vm.countries track by country.countryId" required="true">
+								</select>
+							</li>
+							<li>
+								<label class="labels" id="lblAge">Edad</label>
+								<input type="date" class="inputs" name="txtDOB" id="txtDOB" required>
+							</li>
+							<li>
+							<input type="reset" class="inputs" name="btnSayHi" id = "btnSayHi" value="Saludar" disabled>
+						</li>
+						<li>
+							<label id="lblSayHi"></label>
+						<li>
+						</ul>
+				</div>
+			</form>
+		</article>
+		<article>
+			<div id="right">
+				<label id="lblVisits">Visitantes anteriores</label>
+				<textarea id = "txtAVisits">
+			</textarea>
+				
+			</div>
+		</article>
+	</section>
+</div>
+</body>
+</html>
